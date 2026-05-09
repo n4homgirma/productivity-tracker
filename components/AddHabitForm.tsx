@@ -24,7 +24,7 @@ export default function AddHabitForm({ onAdd }: Props) {
         value={value}
         onChange={(e) => setValue(e.target.value)}
         placeholder="New habit…"
-        className="flex-1 rounded-lg border border-gray-300 px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+        className="flex-1 rounded-lg border border-gray-300 px-4 py-2 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-400"
       />
       <button
         type="submit"

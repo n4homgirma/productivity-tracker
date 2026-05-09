@@ -16,7 +16,9 @@ export default function ProgressBar({ done, total }: Props) {
       </div>
       <div className="h-3 w-full overflow-hidden rounded-full bg-gray-200">
         <div
-          className="h-full rounded-full bg-indigo-500 transition-all duration-300"
+          className={`h-full rounded-full transition-all duration-300 ${
+            done > 0 && done === total ? "bg-green-500" : "bg-indigo-500"
+          }`}
           style={{ width: `${pct}%` }}
         />
       </div>
