@@ -2,6 +2,7 @@ export type Habit = {
   id: string;
   name: string;
   createdAt: string;
+  date: string; // YYYY-MM-DD — which day this task belongs to
 };
 
 export type Completions = {
@@ -27,5 +28,6 @@ export function saveCompletions(completions: Completions): void {
 }
 
 export function today(): string {
-  return new Date().toISOString().slice(0, 10);
+  const d = new Date();
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
 }
