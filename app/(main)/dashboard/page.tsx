@@ -533,11 +533,7 @@ export default function Home() {
         </div>
 
         {/* Footer */}
-        <div className="flex items-center justify-between px-5 text-[#9e9e9e] text-xs flex-shrink-0 capitalize">
-          <div className="flex items-center gap-6">
-            <span className="cursor-pointer hover:text-gray-600 transition-colors">Terms &amp; Conditions</span>
-            <span className="cursor-pointer hover:text-gray-600 transition-colors">Privacy Policy</span>
-          </div>
+        <div className="flex items-center justify-end px-5 text-[#9e9e9e] text-xs flex-shrink-0 capitalize">
           <span>Trasck V1 • {currentYear}</span>
         </div>
 
