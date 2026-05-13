@@ -28,7 +28,7 @@ export default function AuthPage() {
       if (error) {
         setError(error.message);
       } else {
-        router.push("/");
+        router.push("/dashboard");
         router.refresh();
       }
     } else {
@@ -196,6 +196,7 @@ export default function AuthPage() {
               {mode === "signin" ? "Sign up" : "Sign in"}
             </button>
           </p>
+
         </div>
       </div>
     </div>

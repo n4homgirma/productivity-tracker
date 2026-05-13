@@ -4,11 +4,13 @@ import { useEffect, useRef, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
 import MyAccountModal from "./MyAccountModal";
+import LegalModal from "./LegalModal";
 
 export default function NavBar() {
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const [accountOpen, setAccountOpen] = useState(false);
+  const [legalOpen, setLegalOpen] = useState<"privacy" | "terms" | null>(null);
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
   const [initials, setInitials] = useState("U");
   const popupRef = useRef<HTMLDivElement>(null);
@@ -41,7 +43,7 @@ export default function NavBar() {
   async function handleLogout() {
     const supabase = createClient();
     await supabase.auth.signOut();
-    router.push("/login");
+    router.push("/");
     router.refresh();
   }
 
@@ -116,6 +118,19 @@ export default function NavBar() {
               <div className="h-px bg-white/[0.08] mx-3" />
 
               <button
+                onClick={() => { setOpen(false); setLegalOpen("privacy"); }}
+                className="w-full flex items-center gap-3 px-4 py-3 text-white/80 hover:bg-white/[0.07] hover:text-white transition-colors text-sm"
+              >
+                <svg className="w-4 h-4 flex-shrink-0 text-blue-300/70" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+                Privacy &amp; Terms
+              </button>
+
+              {/* Divider */}
+              <div className="h-px bg-white/[0.08] mx-3" />
+
+              <button
                 onClick={handleLogout}
                 className="w-full flex items-center gap-3 px-4 py-3 text-red-400/80 hover:bg-red-400/[0.07] hover:text-red-400 transition-colors text-sm"
               >
@@ -132,6 +147,7 @@ export default function NavBar() {
     </nav>
 
     {accountOpen && <MyAccountModal onClose={() => setAccountOpen(false)} />}
+    {legalOpen && <LegalModal type={legalOpen} onClose={() => setLegalOpen(null)} />}
     </>
   );
 }

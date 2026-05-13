@@ -1,6 +1,12 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
+const PUBLIC_ROUTES = ["/", "/login", "/privacy", "/terms"];
+
+function isPublic(pathname: string) {
+  return PUBLIC_ROUTES.some((r) => pathname === r || pathname.startsWith(r + "/"));
+}
+
 export async function middleware(request: NextRequest) {
   let supabaseResponse = NextResponse.next({ request });
 
@@ -24,19 +30,19 @@ export async function middleware(request: NextRequest) {
   );
 
   const { data: { user } } = await supabase.auth.getUser();
-
   const { pathname } = request.nextUrl;
-  const isLoginRoute = pathname.startsWith("/login");
 
-  if (!user && !isLoginRoute) {
+  // Unauthenticated user trying to access a protected route
+  if (!user && !isPublic(pathname)) {
     const url = request.nextUrl.clone();
     url.pathname = "/login";
     return NextResponse.redirect(url);
   }
 
-  if (user && isLoginRoute) {
+  // Authenticated user visiting login → send to app
+  if (user && pathname.startsWith("/login")) {
     const url = request.nextUrl.clone();
-    url.pathname = "/";
+    url.pathname = "/dashboard";
     return NextResponse.redirect(url);
   }
 
